@@ -1,0 +1,32 @@
+
+id ICON "power.ico"
+// Application manifest.
+1 24 "timedShutdown.manifest"
+1 VERSIONINFO
+FILEVERSION     1,0,0,0
+PRODUCTVERSION  1,0,0,0
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "040904E4"
+    BEGIN
+      VALUE "CompanyName", "JEV Development"
+      VALUE "FileDescription", "Timed Shutdown"
+      VALUE "FileVersion", "1.0"
+      VALUE "InternalName", "Timed Shutdown"
+      VALUE "LegalCopyright", "Timed Shutdown"
+      VALUE "OriginalFilename", "timedShutdown.exe"
+      VALUE "ProductName", "Timed Shutdown"
+      VALUE "ProductVersion", "1.0"
+    END
+  END
+
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0x409, 1252
+  END
+END
+
+
+
+#include "wx/msw/wx.rc"

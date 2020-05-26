@@ -71,29 +71,29 @@ int timedShutdown::processArguments()
 			wxString arg(wxApp::argv[i]);
 			
 			//Check for help command
-			if((arg.Cmp(wxT("-?")) == 0) || (arg.Cmp(wxT("-h")) == 0) || (arg.Cmp(wxT("-help")) == 0))
+			if((arg.Cmp(L"-?") == 0) || (arg.Cmp(wxT("-h")) == 0) || (arg.Cmp(L"-help") == 0))
 			{
 				//Create the usage statement
-				wxString usageStatement(wxT("Usage: "));
+				wxString usageStatement(L"Usage: ");
 				usageStatement.Append(wxApp::argv[0]);
-				usageStatement.Append(wxT(" [-?|-h|-help] [-s] [-a] [-sec seconds] [-hr] [-min minutes] [-day days] [-wk weeks]\n\n[-?|-h|-help]\t Displays help\n[-s]\tSilent mode\n[-a]\tAborts planned shutdown\n[-sec seconds]\tTime in seconds\n[-min minutes]\tTime in minutes\n[-hr hours]\tTime in hours\n[-day days]\tTime in days\n[-wk weeks]\tTime in weeks\n\nExample: "));
+				usageStatement.Append(L" [-?|-h|-help] [-s] [-a] [-sec seconds] [-hr] [-min minutes] [-day days] [-wk weeks]\n\n[-?|-h|-help]\t Displays help\n[-s]\tSilent mode\n[-a]\tAborts planned shutdown\n[-sec seconds]\tTime in seconds\n[-min minutes]\tTime in minutes\n[-hr hours]\tTime in hours\n[-day days]\tTime in days\n[-wk weeks]\tTime in weeks\n\nExample: ");
 				usageStatement.Append(wxApp::argv[0]);
-				usageStatement.Append(wxT(" -s -hr 1 -min 5\n\nShuts down the computer in one hour and five minutes.\n\nNote: Specify silent mode with no time parameters will immediatly shut down the machine."));
+				usageStatement.Append(L" -s -hr 1 -min 5\n\nShuts down the computer in one hour and five minutes.\n\nNote: Specify silent mode with no time parameters will immediatly shut down the machine.");
 				
 				//Display usage statement
-				wxMessageBox(usageStatement, wxT("Usage Information"), wxOK | wxICON_INFORMATION, NULL);
+				wxMessageBox(usageStatement, L"Usage Information", wxOK | wxICON_INFORMATION, NULL);
 				
 				//Return
 				return 1;
 			}
 			//Check for silent mode
-			else if(arg.Cmp(wxT("-s")) == 0)
+			else if(arg.Cmp(L"-s") == 0)
 			{
 				//Set the mode to no gui
 				mode = 1;
 			}
 			//Check for abort mode
-			else if(arg.Cmp(wxT("-a")) == 0)
+			else if(arg.Cmp(L"-a") == 0)
 			{
 				//Adjust the token privileges for the process
 				adjustTokenPrivsGlobal();
@@ -115,11 +115,11 @@ int timedShutdown::processArguments()
 					wxString errorString(buf);
 					
 					//Alert the user to the error
-					wxMessageBox(buf, wxT("Error"), wxOK | wxICON_ERROR, NULL);
+					wxMessageBox(buf, L"Error", wxOK | wxICON_ERROR, NULL);
 				}
 			}
 			//Else if
-			else if(arg.Cmp(wxT("-sec")) == 0)
+			else if(arg.Cmp(L"-sec") == 0)
 			{
 				//If the argument is there to be processed
 				if((i + 1) < wxApp::argc)
@@ -142,7 +142,7 @@ int timedShutdown::processArguments()
 				}
 			}
 			//Else if
-			else if(arg.Cmp(wxT("-hr")) == 0)
+			else if(arg.Cmp(L"-hr") == 0)
 			{
 				//If the argument is there to be processed
 				if((i + 1) < wxApp::argc)
@@ -165,7 +165,7 @@ int timedShutdown::processArguments()
 				}
 			}
 			//Else if
-			else if(arg.Cmp(wxT("-min")) == 0)
+			else if(arg.Cmp(L"-min") == 0)
 			{
 				//If the argument is there to be processed
 				if((i + 1) < wxApp::argc)
@@ -188,7 +188,7 @@ int timedShutdown::processArguments()
 				}
 			}
 			//Else if
-			else if(arg.Cmp(wxT("-day")) == 0)
+			else if(arg.Cmp(L"-day") == 0)
 			{
 				//If the argument is there to be processed
 				if((i + 1) < wxApp::argc)
@@ -211,7 +211,7 @@ int timedShutdown::processArguments()
 				}
 			}
 			//Else if
-			else if(arg.Cmp(wxT("-wk")) == 0)
+			else if(arg.Cmp(L"-wk") == 0)
 			{
 				//If the argument is there to be processed
 				if((i + 1) < wxApp::argc)
@@ -240,7 +240,7 @@ int timedShutdown::processArguments()
 	if(isError == true)
 	{
 		//Display error
-		wxMessageBox(wxT("Error: One of the parameters is not an integer."), wxT("Parameter Error"), wxICON_ERROR | wxOK);
+		wxMessageBox(L"Error: One of the parameters is not an integer.", L"Parameter Error", wxICON_ERROR | wxOK);
 	}
 	//If no error
 	else
@@ -275,7 +275,7 @@ int timedShutdown::processArguments()
 				wxString errorString(buf);
 				
 				//Alert the user to the error
-				wxMessageBox(buf, wxT("Error"), wxOK | wxICON_ERROR, NULL);
+				wxMessageBox(buf, L"Error", wxOK | wxICON_ERROR, NULL);
 			}
 		}
 	}
@@ -285,7 +285,7 @@ int timedShutdown::processArguments()
 }
 
 //Constructor for the main class
-tsFrame::tsFrame() : wxFrame(NULL, wxID_ANY, wxT("Timed Shutdown"), wxDefaultPosition, wxSize(450,120)) 
+tsFrame::tsFrame() : wxFrame(NULL, wxID_ANY, L"Timed Shutdown", wxDefaultPosition, wxSize(450,120)) 
 {
 	//Create the menubar
 	menuBar = new wxMenuBar();
@@ -295,17 +295,17 @@ tsFrame::tsFrame() : wxFrame(NULL, wxID_ANY, wxT("Timed Shutdown"), wxDefaultPos
 	helpMenu = new wxMenu();
 	
 	//Add to the menus
-	fileMenu->Append(idSh, wxT("Initiate Timed &Shutdown\tCtrl+S"), wxT("Initiates the timed shutdown"));
-	fileMenu->Append(idAb, wxT("&Abort Timed Shutdown\tCtrl+A"), wxT("Aborts the timed shutdown"));
+	fileMenu->Append(idSh, L"Initiate Timed &Shutdown\tCtrl+S"), wxT("Initiates the timed shutdown");
+	fileMenu->Append(idAb, L"&Abort Timed Shutdown\tCtrl+A"), wxT("Aborts the timed shutdown");
 	fileMenu->AppendSeparator();
-	fileMenu->Append(idEx, wxT("E&xit\t Ctrl+F4"), wxT("Exits the program"));
+	fileMenu->Append(idEx, L"E&xit\t Ctrl+F4"), wxT("Exits the program");
 	
 	//Append to the help menu
-	helpMenu->Append(wxID_ABOUT, wxT("&About...\tF1"), wxT("Show about dialog"));
+	helpMenu->Append(wxID_ABOUT, L"&About...\tF1"), wxT("Show about dialog");
 	
 	//Add the file menu to the menu bar
-	menuBar->Append(fileMenu, wxT("&File"));
-	menuBar->Append(helpMenu, wxT("&Help"));
+	menuBar->Append(fileMenu, L"&File");
+	menuBar->Append(helpMenu, L"&Help");
 	
 	//Set the menubar
 	SetMenuBar(menuBar);
@@ -329,14 +329,14 @@ tsFrame::tsFrame() : wxFrame(NULL, wxID_ANY, wxT("Timed Shutdown"), wxDefaultPos
 		
 	//Create the combo box
 	unitsCombo = new wxComboBox(tPanel, idUC,
-		wxT("Seconds"), wxDefaultPosition, wxDefaultSize, unitsList, wxCB_READONLY);
+		L"Seconds", wxDefaultPosition, wxDefaultSize, unitsList, wxCB_READONLY);
 		
 	//Create the button
-	wxButton * shutDButton = new wxButton(tPanel, idSb, wxT("Initiate &Shutdown"));
+	wxButton * shutDButton = new wxButton(tPanel, idSb, L"Initiate &Shutdown");
 	
 	//Create the static text
-	wxStaticText * lText = new wxStaticText(tPanel, wxID_ANY, wxT("Amount of Time:"), 
-		wxDefaultPosition, wxDefaultSize, 0, wxT("staticText"));
+	wxStaticText * lText = new wxStaticText(tPanel, wxID_ANY, L"Amount of Time:", 
+		wxDefaultPosition, wxDefaultSize, 0, L"staticText");
 	
 	//Create the sizers
 	wxBoxSizer * hSizer = new wxBoxSizer(wxHORIZONTAL);
@@ -352,7 +352,7 @@ tsFrame::tsFrame() : wxFrame(NULL, wxID_ANY, wxT("Timed Shutdown"), wxDefaultPos
 	
 	//Create the status bar
     CreateStatusBar(1);
-    SetStatusText(wxT("Timed Shutdown"));
+    SetStatusText(L"Timed Shutdown");
 	
 	//Set the icon
 	SetIcon(wxIcon(power_xpm));
@@ -424,31 +424,31 @@ void tsFrame::shutdown(int numSeconds)
 	wchar_t message[250];
 	
 	//If seconds, just call shutdown with value
-	if(selection.Cmp(wxT("Seconds")) == 0)
+	if(selection.Cmp(L"Seconds") == 0)
 	{
 		//Create the message
 		swprintf(message, L"The computer will be shutdown in %d seconds.", iVal);
 	}
 	//Else if, minutes
-	else if(selection.Cmp(wxT("Minutes")) == 0)
+	else if(selection.Cmp(L"Minutes") == 0)
 	{
 		//Create the message
 		swprintf(message, L"The computer will be shutdown in %d minutes.", iVal);
 	}
 	//Else if, hours
-	else if(selection.Cmp(wxT("Hours")) == 0)
+	else if(selection.Cmp(L"Hours") == 0)
 	{
 		//Create the message
 		swprintf(message, L"The computer will be shutdown in %d hours.", iVal);
 	}
 	//Else if, days
-	else if(selection.Cmp(wxT("Days")) == 0)
+	else if(selection.Cmp(L"Days") == 0)
 	{
 		//Create the message
 		swprintf(message, L"The computer will be shutdown in %d days.", iVal);
 	}
 	//Else if, weeks
-	else if(selection.Cmp(wxT("Weeks")) == 0)
+	else if(selection.Cmp(L"Weeks") == 0)
 	{
 		//Create the message
 		swprintf(message, L"The computer will be shutdown in %d weeks.", iVal);
@@ -472,7 +472,7 @@ void tsFrame::shutdown(int numSeconds)
 		wxString errorString(buf);
 		
 		//Alert the user to the error
-		wxMessageBox(buf, wxT("Error"), wxOK | wxICON_ERROR, this);
+		wxMessageBox(buf, L"Error", wxOK | wxICON_ERROR, this);
 	}
 }
 
@@ -481,12 +481,12 @@ void tsFrame::about(wxCommandEvent& event)
 {
 	//Creates the dialog and sets the properties
 	wxAboutDialogInfo aboutInfo;
-	aboutInfo.SetName(wxT("Timed Shutdown"));
-	aboutInfo.SetVersion(wxT("1.0"));
-	aboutInfo.SetDescription(_(wxT("Initiates a Timed Shutdown")));
-	//aboutInfo.SetCopyright(wxT("(C) 2013"));
-	aboutInfo.SetWebSite(wxT("https://github.com/Joshvanburen"));
-	aboutInfo.AddDeveloper(wxT("Josh Van Buren"));
+	aboutInfo.SetName(L"Timed Shutdown");
+	aboutInfo.SetVersion(L"1.0");
+	aboutInfo.SetDescription(_(L"Initiates a Timed Shutdown"));
+	//aboutInfo.SetCopyright(L"(C) 2013");
+	aboutInfo.SetWebSite(L"https://github.com/Joshvanburen");
+	aboutInfo.AddDeveloper(L"Josh Van Buren");
 	aboutInfo.SetIcon(wxIcon(power_xpm));
 
 	//Displays the box
@@ -522,31 +522,31 @@ void tsFrame::initiateShutdown(wxCommandEvent &event)
 		wxString selection = unitsCombo->GetValue();
 		
 		//If seconds, just call shutdown with value
-		if(selection.Cmp(wxT("Seconds")) == 0)
+		if(selection.Cmp(L"Seconds") == 0)
 		{
 			//Calls the shutdown function
 			shutdown(iVal);
 		}
 		//Else if, minutes
-		else if(selection.Cmp(wxT("Minutes")) == 0)
+		else if(selection.Cmp(L"Minutes") == 0)
 		{
 			//Calls the shutdown function
 			shutdown(minutesToSeconds(iVal));
 		}
 		//Else if, hours
-		else if(selection.Cmp(wxT("Hours")) == 0)
+		else if(selection.Cmp(L"Hours") == 0)
 		{
 			//Calls the shutdown function
 			shutdown(hoursToSeconds(iVal));
 		}
 		//Else if, days
-		else if(selection.Cmp(wxT("Days")) == 0)
+		else if(selection.Cmp(L"Days") == 0)
 		{
 			//Calls the shutdown function
 			shutdown(daysToSeconds(iVal));
 		}
 		//Else if, weeks
-		else if(selection.Cmp(wxT("Weeks")) == 0)
+		else if(selection.Cmp(L"Weeks") == 0)
 		{
 			//Calls the shutdown function
 			shutdown(weeksToSeconds(iVal));
@@ -556,7 +556,7 @@ void tsFrame::initiateShutdown(wxCommandEvent &event)
 	else
 	{
 		//Incorrect input
-		wxMessageBox(wxT("Error: Please Enter an Integer"), wxT("Error: Incorrect Input"), wxOK | wxICON_ERROR, this);
+		wxMessageBox(L"Error: Please Enter an Integer", L"Error: Incorrect Input", wxOK | wxICON_ERROR, this);
 	}
 }
 
@@ -583,7 +583,7 @@ void tsFrame::abortShutdown(wxCommandEvent &event)
 		wxString errorString(buf);
 		
 		//Alert the user to the error
-		wxMessageBox(buf, wxT("Error"), wxOK | wxICON_ERROR, this);
+		wxMessageBox(buf, L"Error", wxOK | wxICON_ERROR, this);
 	}
 }
 
@@ -625,7 +625,7 @@ void tsFrame::adjustTokenPrivs()
    if(!OpenProcessToken(GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &currToken)) 
    {
 		//Failed
-		wxMessageBox(wxT("Error: Cannot get the handle for the current process"), wxT("Error"), wxOK | wxICON_ERROR, this);
+		wxMessageBox(L"Error: Cannot get the handle for the current process", L"Error", wxOK | wxICON_ERROR, this);
    }
    //Else, keep going
    else

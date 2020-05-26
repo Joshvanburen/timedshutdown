@@ -1,24 +1,26 @@
-#Josh Van Buren
-#Make file for wxwidgets example
-
 #Variables
-GCC = g++
+GPP = g++
 SOURCE = timedShutdown.cpp
-CSOURCE = timedShutdown.cpp
-LIBS = -mthreads -lz -lrpcrt4 -loleaut32 -lole32 -luuid -lwinspool -lwinmm -lshell32 -lcomctl32 -lcomdlg32 -ladvapi32 -lwsock32 -lgdi32 -ltag
-WXOPTS1 = -I/usr/local/lib/wx/include/msw-unicode-static-2.9 -I/usr/local/include/wx-2.9 -D_LARGEFILE_SOURCE=unknown -D__WXMSW__ -mthreads
-WXOPTS2 = -D_LARGEFILE_SOURCE=unknown -D__WXMSW__ -mthreads -L/c/wx/mswrelease/lib -L/usr/local/lib  /usr/local/lib/libwx_mswu_xrc-2.9.a /usr/local/lib/libwx_mswu_html-2.9.a /usr/local/lib/libwx_mswu_qa-2.9.a /usr/local/lib/libwx_mswu_adv-2.9.a /usr/local/lib/libwx_mswu_core-2.9.a /usr/local/lib/libwx_baseu_xml-2.9.a /usr/local/lib/libwx_baseu_net-2.9.a /usr/local/lib/libwx_baseu-2.9.a -lexpat -lwxregexu-2.9 -lwxtiff-2.9 -lwxjpeg-2.9 -lwxpng-2.9 -lz -lrpcrt4 -loleaut32 -lole32 -luuid -lwinspool -lwinmm -lshell32 -lcomctl32 -lcomdlg32 -ladvapi32 -lwsock32 -lgdi32 -static
-OBJS = timedShutdown.o resource.o
+RCSOURCE = timedShutdown.rc
+RCONAME = appRC.o
+LIBS1 = -L/mingw32/lib   -Wl,--subsystem,windows -mwindows /mingw32/lib/libwx_mswu_xrc-3.0.a   
+LIBS2 = /mingw32/lib/libwx_mswu_webview-3.0.a /mingw32/lib/libwx_mswu_qa-3.0.a /mingw32/lib/libwx_baseu_net-3.0.a /mingw32/lib/libwx_mswu_html-3.0.a /mingw32/lib/libwx_mswu_adv-3.0.a
+LIBS3 = /mingw32/lib/libwx_mswu_core-3.0.a /mingw32/lib/libwx_baseu_xml-3.0.a /mingw32/lib/libwx_baseu-3.0.a -lpng -ljpeg -ltiff -lexpat
+LIBS4 = -lwxregexu-3.0 -lz -lrpcrt4 -loleaut32 -lole32 -luuid -lwinspool -lwinmm -lshell32 -lcomctl32 -lcomdlg32 -ladvapi32 -lwsock32 -lgdi32
+EXTRALIBS = 
+WXINC = -I/mingw32/lib/wx/include/msw-unicode-static-3.0 -I/mingw32/include/wx-3.0 -D_FILE_OFFSET_BITS=64 -D__WXMSW__ -mthreads -O2
+OBJS = timedShutdown.o  appRC.o
 PNAME = timedShutdown.exe
 WINDRES = windres
+WINDRESINC = --include-dir /mingw32/include/wx-3.0 --define __WIN32__ --define __GNUWIN32__
 
 
 #Compile command
 timedShutdown.exe : $(SOURCE) 
-	$(WINDRES) timedShutdown.rc -O coff -o resource.o -I/usr/local/lib/wx/include/msw-unicode-static-2.9 -I/usr/local/include/wx-2.9
-	$(GCC) -c $(CSOURCE) $(WXOPTS1) -static 
-	$(GCC) -o $(PNAME) $(OBJS) $(WXOPTS2) $(LIBS) -s -static -mwindows
+	$(WINDRES) $(WINDRESINC) -i $(RCSOURCE) -O coff -o $(RCONAME)
+	$(GPP) -c $(SOURCE) $(WXINC)
+	$(GPP) -o $(PNAME) $(OBJS) $(LIBS1) $(LIBS2) $(LIBS3) $(LIBS4) $(EXTRALIBS) -static -s
 	
 #Cleans up
 .PHONY clean :
-	rm *.o *.exe -f  
+	rm *.o *.exe -f 

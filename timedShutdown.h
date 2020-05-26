@@ -4,6 +4,9 @@
 #ifndef TIMEDSHUTDOWN_H
 #define TIMEDSHUTDOWN_H
 
+//Use unicode
+#define UNICODE
+
 //Import headers
 #include <wx/wx.h>
 #include <wx/aboutdlg.h>

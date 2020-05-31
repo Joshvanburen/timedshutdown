@@ -39,11 +39,6 @@ class tsFrame : public wxFrame
 	
 	//Private method and variable declarations
 	private:
-		wxMenu * fileMenu;
-		wxMenu * helpMenu;
-		wxMenuBar * menuBar;
-		wxTextCtrl * timeField;
-		wxComboBox * unitsCombo;
 		int seconds(int seconds);
 		int minutesToSeconds(int minutes);
 		int daysToSeconds(int days);

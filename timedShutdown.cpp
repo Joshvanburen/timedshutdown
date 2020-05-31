@@ -1,4 +1,6 @@
-/**
+/*
+Josh Van Buren
+Main file for timedshutdown
 */
 
 //Include the header with function and class definitions
@@ -288,11 +290,11 @@ int timedShutdown::processArguments()
 tsFrame::tsFrame() : wxFrame(NULL, wxID_ANY, L"Timed Shutdown", wxDefaultPosition, wxSize(450,120)) 
 {
 	//Create the menubar
-	menuBar = new wxMenuBar();
+	wxMenuBar * menuBar = new wxMenuBar();
 	
 	//Create the file menu, help menu, edit menu
-	fileMenu = new wxMenu();
-	helpMenu = new wxMenu();
+	wxMenu * fileMenu = new wxMenu();
+	wxMenu * helpMenu = new wxMenu();
 	
 	//Add to the menus
 	fileMenu->Append(idSh, L"Initiate Timed &Shutdown\tCtrl+S"), wxT("Initiates the timed shutdown");
@@ -314,7 +316,7 @@ tsFrame::tsFrame() : wxFrame(NULL, wxID_ANY, L"Timed Shutdown", wxDefaultPositio
 	wxPanel * tPanel = new wxPanel(this, wxID_ANY);
 	
 	//Initialize the combo box and text control
-	timeField = new wxTextCtrl(tPanel, idTF, "0", wxDefaultPosition, wxDefaultSize,  
+	wxTextCtrl * timeField = new wxTextCtrl(tPanel, idTF, "0", wxDefaultPosition, wxDefaultSize,  
 		wxTE_RICH | wxTE_PROCESS_ENTER, wxDefaultValidator, wxTextCtrlNameStr);
 		
 	//Create the list of units
@@ -328,7 +330,7 @@ tsFrame::tsFrame() : wxFrame(NULL, wxID_ANY, L"Timed Shutdown", wxDefaultPositio
 	unitsList.Add("Weeks");
 		
 	//Create the combo box
-	unitsCombo = new wxComboBox(tPanel, idUC,
+	wxComboBox * unitsCombo = new wxComboBox(tPanel, idUC,
 		L"Seconds", wxDefaultPosition, wxDefaultSize, unitsList, wxCB_READONLY);
 		
 	//Create the button
@@ -405,6 +407,9 @@ void tsFrame::shutdown(int numSeconds)
 	//Attempt to adjust the process token privileges
 	adjustTokenPrivs();
 	
+	//Find the text control
+	wxTextCtrl * timeField = (wxTextCtrl * )FindWindow(idTF);
+	
 	//Get the value in the text control
 	wxString tValue = timeField->GetValue();
 	
@@ -416,6 +421,9 @@ void tsFrame::shutdown(int numSeconds)
 	
 	//Caste to integer
 	int iVal = (int)lVal;
+	
+	//Find the combo box
+	wxComboBox * unitsCombo = (wxComboBox *)FindWindow(idUC);
 	
 	//Get the value in the combo box
 	wxString selection = unitsCombo->GetValue();
@@ -506,6 +514,9 @@ void tsFrame::initiateShutdown(wxCommandEvent &event)
 	//Check the input to make sure that it is an integer
 	if(checkInput() == true)
 	{
+		//Find the text control
+		wxTextCtrl * timeField = (wxTextCtrl * )FindWindow(idTF);
+	
 		//Get the value in the text control
 		wxString tValue = timeField->GetValue();
 		
@@ -517,6 +528,9 @@ void tsFrame::initiateShutdown(wxCommandEvent &event)
 		
 		//Caste to integer
 		int iVal = (int)lVal;
+		
+		//Find the combo box
+		wxComboBox * unitsCombo = (wxComboBox *)FindWindow(idUC);
 		
 		//Get the value in the combo box
 		wxString selection = unitsCombo->GetValue();
@@ -596,6 +610,9 @@ void tsFrame::unitsChange(wxCommandEvent &event)
 //Checks what the user has input in the text box
 bool tsFrame::checkInput()
 {
+	//Find the text control
+	wxTextCtrl * timeField = (wxTextCtrl * )FindWindow(idTF);
+	
 	//Get the value in the text control
 	wxString tValue = timeField->GetValue();
 	

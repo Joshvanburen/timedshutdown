@@ -6,9 +6,6 @@ Main file for timedshutdown
 //Include the header with function and class definitions
 #include "timedShutdown.h"
 
-//Include the icon
-#include "power.xpm"
-
 //Macro to implement the app
 IMPLEMENT_APP(timedShutdown)
 
@@ -357,7 +354,7 @@ tsFrame::tsFrame() : wxFrame(NULL, wxID_ANY, L"Timed Shutdown", wxDefaultPositio
     SetStatusText(L"Timed Shutdown");
 	
 	//Set the icon
-	SetIcon(wxIcon(power_xpm));
+	SetIcon(wxIcon(L"id"));
 	
 	//Fit the sizer to the panel
 	hSizer->Fit(tPanel);
@@ -495,7 +492,7 @@ void tsFrame::about(wxCommandEvent& event)
 	//aboutInfo.SetCopyright(L"(C) 2013");
 	aboutInfo.SetWebSite(L"https://github.com/Joshvanburen");
 	aboutInfo.AddDeveloper(L"Josh Van Buren");
-	aboutInfo.SetIcon(wxIcon(power_xpm));
+	aboutInfo.SetIcon(wxIcon(L"id"));
 
 	//Displays the box
 	wxAboutBox(aboutInfo);

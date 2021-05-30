@@ -284,7 +284,7 @@ int timedShutdown::processArguments()
 }
 
 //Constructor for the main class
-tsFrame::tsFrame() : wxFrame(NULL, wxID_ANY, L"Timed Shutdown", wxDefaultPosition, wxSize(450,120)) 
+tsFrame::tsFrame() : wxFrame(NULL, wxID_ANY, L"Timed Shutdown", wxDefaultPosition, wxDefaultSize) 
 {
 	//Create the menubar
 	wxMenuBar * menuBar = new wxMenuBar();
@@ -358,6 +358,9 @@ tsFrame::tsFrame() : wxFrame(NULL, wxID_ANY, L"Timed Shutdown", wxDefaultPositio
 	
 	//Fit the sizer to the panel
 	hSizer->Fit(tPanel);
+	
+	//Set the size hints
+	hSizer->SetSizeHints(this);
 	
 	//Show the dialog
 	//Show(true);
